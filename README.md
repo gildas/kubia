@@ -43,14 +43,16 @@ items:
       selector:
         app: kubia
       ports:
-        - port: 80
+        - name:       http
+          port:       80
           targetPort: 8080
+          protocol:   TCP
 ```
 
 Run:
 
 ```sh
-kubectl apply -f app-v1.yaml
+kubectl apply -f app.yaml
 ```
 
 Now let's buid the v2 of the app:
@@ -61,3 +63,10 @@ docker build -t gildas/kubia:2.0.0 .
 docker tag gildas/kubia:2.0.0 gildas/kubia:latest
 docker push gildas/kubia
 ```
+
+Now, let's roll the new version:
+
+```sh
+kb rolling-update kubia-v1 kubia-v2 --image=gildas/kubia:2.0.0
+```
+

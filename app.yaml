@@ -21,10 +21,12 @@ items:
     metadata:
       name: kubia
     spec:
-      #type: NodePort #LoadBalancer
-      type: LoadBalancer
+      type: LoadBalancer # Since I am running on docker Mac or minikube, there is no cloud's load balancer
+      #type: NodePort      # So, we should use a NodePort
       selector:
         app: kubia
       ports:
-        - port: 80
+        - name:       http
+          port:       80
           targetPort: 8080
+          protocol:   TCP
