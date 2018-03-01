@@ -13,6 +13,8 @@ docker push gildas/kubia
 
 ## Kubernetes fun...
 
+### Deploying with a Replication Controller
+
 Let's run the application 1.0.0 with a replication controller and a load balancer
 
 ```yaml
@@ -52,8 +54,10 @@ items:
 Run:
 
 ```sh
-kubectl apply -f app.yaml
+kubectl apply -f app-rc.yaml
 ```
+
+### Rolling out v2
 
 Now let's buid the v2 of the app:
 
@@ -67,6 +71,41 @@ docker push gildas/kubia
 Now, let's roll the new version:
 
 ```sh
-kb rolling-update kubia-v1 kubia-v2 --image=gildas/kubia:2.0.0
+kubectl rolling-update kubia-v1 kubia-v2 --image=gildas/kubia:2.0.0
 ```
+
+### Deploying with a Deployment
+
+Create a new manifest:
+
+```yaml
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: kubia
+      labels:
+        app: kubia
+    spec:
+      container:
+        - image: gildas/kubia:1.0.0
+          name:  nodejs
+```
+
+Let's create the deployment:
+
+```sh
+kubectl create -f app-db-1.0.0.yaml --record
+```
+
+Check the evolution if the deployment:
+
+```sh
+kubectl rollout status deployment kubia
+```
+
 
