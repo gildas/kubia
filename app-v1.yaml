@@ -1,21 +1,3 @@
-# Kubia learning....
-
-## Docker stuff
-
-Build the docker image:
-
-```sh
-cd docker
-docker build -t gildas/kubia:1.0.0 .
-docker tag gildas/kubia:1.0.0 gildas/kubia:latest
-docker push gildas/kubia
-```
-
-## Kubernetes fun...
-
-Let's run the application 1.0.0 with a replication controller and a load balancer
-
-```yaml
 apiVersion: v1
 kind: List
 items:
@@ -39,16 +21,10 @@ items:
     metadata:
       name: kubia
     spec:
+      #type: NodePort #LoadBalancer
       type: LoadBalancer
       selector:
         app: kubia
       ports:
         - port: 80
           targetPort: 8080
-```
-
-Run:
-
-```sh
-kubectl apply -f app-v1.yaml
-```
