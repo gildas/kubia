@@ -11,4 +11,4 @@ var handler = function(request, response) {
   response.end("Kubia v." + VERSION + ": You've hit pod " + os.hostname() + "\n");
 };
 
-http.createServer(handler).listen(8080);
+http.createServer(handler).listen(8080, '0.0.0.0');
