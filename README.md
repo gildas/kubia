@@ -108,4 +108,44 @@ Check the evolution if the deployment:
 kubectl rollout status deployment kubia
 ```
 
+We just use the same service for now.
+
+Now, we can change the deployment specs dynamically:
+
+```sh
+kubectl patch deployment kubia -p '{"spec": {"minReadySeconds": 10}}'
+```
+
+Now let's deploy a 2.0.0 version:
+
+```sh
+kubectl set image deployment kubia nodejs=gildas/kubia:2.0.0
+```
+
+Check the roll-out:
+
+```sh
+kubecrl rollout status deployment kubia
+```
+
+You should see the version being rolled out.
+
+If we need to undo a rollout, use this:
+
+```sh
+kubectl rollout undo deployment kubia
+```
+
+To get the history of rollouts (that is the reason for `--record` when creating the deployment):
+
+```sh
+kubectl rollout history deployment kubia
+```
+
+You can also pause/resume a rollout:
+
+```sh
+kubectl rollout pause deployment kubia
+kubectl rollout resume deployment kubia
+```
 
