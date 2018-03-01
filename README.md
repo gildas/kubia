@@ -5,7 +5,7 @@
 Build the docker image:
 
 ```sh
-cd docker
+cd docker-v1
 docker build -t gildas/kubia:1.0.0 .
 docker tag gildas/kubia:1.0.0 gildas/kubia:latest
 docker push gildas/kubia
@@ -51,4 +51,13 @@ Run:
 
 ```sh
 kubectl apply -f app-v1.yaml
+```
+
+Now let's buid the v2 of the app:
+
+```sh
+cd docker-v2
+docker build -t gildas/kubia:2.0.0 .
+docker tag gildas/kubia:2.0.0 gildas/kubia:latest
+docker push gildas/kubia
 ```
